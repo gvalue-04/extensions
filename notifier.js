@@ -48,7 +48,7 @@
               {
                 opcode:'sendimgnotif',
                 blockType: Scratch.BlockType.COMMAND,
-                text: 'Dynamic Notify [TITLE] [BODY] [IMG]',
+                text: 'Image Notify [TITLE] [BODY] [IMG]',
                 arguments: {
                   TITLE: {
                     type: Scratch.ArgumentType.STRING,
@@ -60,10 +60,15 @@
                   },
                   IMG: {
                     type: Scratch.ArgumentType.STRING,
-                    defaultValue: 'https://imageserver.xyz/path/to/image.png'
+                    defaultValue: 'https://extensions.turbowarp.org/dango.png'
                   }
                 }
-              }
+              },
+                {
+                opcode:'haspermissionnotif',
+                blockType: Scratch.BlockType.BOOLEAN,
+                text: 'has notification permission?',
+                }
           ]
         };
       }
@@ -99,6 +104,15 @@
                 })
             } else {
                 throw new error('Error: couldnt get notification permission from browser')
+            }
+        })
+      }
+        haspermissionnotif() {
+        Notification.requestPermission().then(perm => {
+            if (perm === "granted") {
+                return true;
+            } else {
+                return false;
             }
         })
       }
